@@ -1,0 +1,18 @@
+{
+    "name": "com.sikny.unityextendededitor",
+    "version": "0.1.1",
+    "displayName": "Unity Extended Editor",
+    "description": "Unity Editor utilities, windows, etc",
+    "unity": "2020.3",
+    "dependencies": {},
+    "samples": {
+      "displayName": "Examples",
+      "description": "Some example scenes",
+      "path": "Samples~/Examples"
+    },
+    "author": {
+      "name": "Quentin Pamart",
+      "email": "pamartqu@gmail.com"
+    }
+  }
+  
