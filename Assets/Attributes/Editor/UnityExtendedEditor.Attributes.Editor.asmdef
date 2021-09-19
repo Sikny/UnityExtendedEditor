@@ -1,7 +1,9 @@
 {
-    "name": "UnityExtendedEditor.Editor",
+    "name": "UnityExtendedEditor.Attributes.Editor",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "GUID:0309ce77c6b3b6343bcfafa5e4ce401c"
+    ],
     "includePlatforms": [
         "Editor"
     ],
