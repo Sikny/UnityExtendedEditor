@@ -7,16 +7,16 @@ namespace UnityExtendedEditor.ExtendedAttributes.Editor {
     [CustomPropertyDrawer(typeof(MinMaxSliderAttribute))]
     public class MinMaxSliderDrawer : PropertyDrawer
     {
-        private const string kVectorMinName = "x";
-        private const string kVectorMaxName = "y";
+        private const string KVectorMinName = "x";
+        private const string KVectorMaxName = "y";
         //private const float kFloatFieldWidth = 16f;
-        private const float kSpacing = 2f;
-        private const float kRoundingValue = 100f;
+        private const float KSpacing = 2f;
+        private const float KRoundingValue = 100f;
 
-        private static readonly int controlHash = "Foldout".GetHashCode();
-        private static readonly GUIContent unsupported = EditorGUIUtility.TrTextContent("Unsupported field type");
+        private static readonly int ControlHash = "Foldout".GetHashCode();
+        private static readonly GUIContent Unsupported = EditorGUIUtility.TrTextContent("Unsupported field type");
 
-        private bool pressed;
+        private bool _pressed;
 
         private float Round(float value, float roundingValue)
         {
@@ -37,8 +37,8 @@ namespace UnityExtendedEditor.ExtendedAttributes.Editor {
                     {
                         if (round)
                         {
-                            min = Round(min, kRoundingValue);
-                            max = Round(max, kRoundingValue);
+                            min = Round(min, KRoundingValue);
+                            max = Round(max, KRoundingValue);
                         }
                         property.vector2Value = new Vector2(min, max);
                     }
@@ -47,8 +47,6 @@ namespace UnityExtendedEditor.ExtendedAttributes.Editor {
                     {
                         property.vector2IntValue = new Vector2Int((int)min, (int)max);
                     }
-                    break;
-                default:
                     break;
             }
         }
@@ -74,20 +72,20 @@ namespace UnityExtendedEditor.ExtendedAttributes.Editor {
                     }
                     break;
                 default:
-                    EditorGUI.LabelField(position, label, unsupported);
+                    EditorGUI.LabelField(position, label, Unsupported);
                     return;
             }
 
-            var attr = attribute as MinMaxSliderAttribute;
+            if(!(attribute is MinMaxSliderAttribute attr)) return;
 
             float ppp = EditorGUIUtility.pixelsPerPoint;
-            float spacing = kSpacing * ppp;
+            float spacing = KSpacing * ppp;
             float fieldWidth = ppp * (/*attr.DataFields && attr.FlexibleFields ?*/
                 FlexibleFloatFieldWidth(attr.Min, attr.Max)/* : kFloatFieldWidth*/);
 
             var indent = EditorGUI.indentLevel;
 
-            int id = GUIUtility.GetControlID(controlHash, FocusType.Keyboard, position);
+            int id = GUIUtility.GetControlID(ControlHash, FocusType.Keyboard, position);
             var r = EditorGUI.PrefixLabel(position, id, label);
 
             Rect sliderPos = r;
@@ -101,20 +99,20 @@ namespace UnityExtendedEditor.ExtendedAttributes.Editor {
             if (Event.current.type == EventType.MouseDown &&
                 sliderPos.Contains(Event.current.mousePosition))
             {
-                pressed = true;
+                _pressed = true;
                 min = Mathf.Clamp(min, attr.Min, attr.Max);
                 max = Mathf.Clamp(max, attr.Min, attr.Max);
                 SetVectorValue(property, ref min, ref max, attr.Round);
                 GUIUtility.keyboardControl = 0; // TODO keep focus but stop editing
             }
 
-            if (pressed && Event.current.type == EventType.MouseUp)
+            if (_pressed && Event.current.type == EventType.MouseUp)
             {
                 if (attr.Round)
                 {
                     SetVectorValue(property, ref min, ref max, true);
                 }
-                pressed = false;
+                _pressed = false;
             }
 
             EditorGUI.BeginChangeCheck();
@@ -131,7 +129,7 @@ namespace UnityExtendedEditor.ExtendedAttributes.Editor {
                 Rect minPos = r;
                 minPos.width = fieldWidth;
 
-                var vectorMinProp = property.FindPropertyRelative(kVectorMinName);
+                var vectorMinProp = property.FindPropertyRelative(KVectorMinName);
                 EditorGUI.showMixedValue = vectorMinProp.hasMultipleDifferentValues;
                 EditorGUI.BeginChangeCheck();
                 EditorGUI.indentLevel = 0;
@@ -152,7 +150,7 @@ namespace UnityExtendedEditor.ExtendedAttributes.Editor {
                 maxPos.x += maxPos.width - fieldWidth;
                 maxPos.width = fieldWidth;
 
-                var vectorMaxProp = property.FindPropertyRelative(kVectorMaxName);
+                var vectorMaxProp = property.FindPropertyRelative(KVectorMaxName);
                 EditorGUI.showMixedValue = vectorMaxProp.hasMultipleDifferentValues;
                 EditorGUI.BeginChangeCheck();
                 EditorGUI.indentLevel = 0;
