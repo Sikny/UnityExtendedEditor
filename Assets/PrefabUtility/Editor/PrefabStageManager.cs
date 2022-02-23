@@ -46,7 +46,11 @@ namespace UnityExtendedEditor.PrefabUtility.Editor
                         prefabStageListener.OnPrefabClosing();
                     }
 
+                    #if UNITY_2020_1_OR_NEWER
                     UnityEditor.PrefabUtility.SaveAsPrefabAsset(root, prefabStage.assetPath);
+                    #else
+                    UnityEditor.PrefabUtility.SaveAsPrefabAsset(root, prefabStage.prefabAssetPath);
+                    #endif
                     UnityEditor.PrefabUtility.UnloadPrefabContents(root);
                 }
             }
