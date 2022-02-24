@@ -1,9 +1,8 @@
 using UnityEditor;
 using UnityEngine;
-using UnityExtendedEditor.Editor;
 
 // ReSharper disable once CheckNamespace
-namespace UnityExtendedEditor.ExtendedAttributes.Editor {
+namespace UnityExtendedEditor.Attributes.Editor {
     [CustomPropertyDrawer(typeof(MinMaxSliderAttribute))]
     public class MinMaxSliderDrawer : PropertyDrawer
     {
