@@ -167,6 +167,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   testInt: 0
+  minMaxSlider: {x: 0.21, y: 0.78}
+  progressBar: 22.9
+  progressBarValue: 22.9
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
