@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityExtendedEditor.Attributes;
 
@@ -16,6 +15,8 @@ namespace UnityExtendedEditor.Examples {
         [ProgressBar] public float progressBar;
 
         [Range(0, 100)] public float progressBarValue;
+
+        [Color(1, 0, 0)] public string stringColoredRed;
 
         private void OnValidate() {
             progressBar = progressBarValue;
