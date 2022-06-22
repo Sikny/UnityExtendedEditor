@@ -27,4 +27,5 @@ jobs:
               with:
                 token: ${{ secrets.NPM_TOKEN }}
                 registry: http://sikny.ovh:4873
+                package: Assets/package.json
                 access: public
