@@ -23,7 +23,9 @@ namespace EditorUtils.Editor {
         }
 
         private static void OnToolbarGUI() {
-            var index = EditorGUILayout.Popup(_currentSceneIndex, GetScenesNames(), GUILayout.Width(150));
+            GUIStyle style = EditorStyles.toolbarPopup;
+            var index = EditorGUILayout.Popup(_currentSceneIndex, GetScenesNames(), style, 
+                GUILayout.Width(150));
             
             if(_currentSceneIndex == index)
                 return;
