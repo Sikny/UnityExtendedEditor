@@ -18,7 +18,7 @@ jobs:
         steps:
             - uses: actions/checkout@v3
             
-            - name: Move to Assets folder
-              run: cd Assets
             - name: Publish package
-              run: npm publish --registry http://sikny.ovh:4873
+              run: |
+                cd Assets
+                npm publish --registry http://sikny.ovh:4873
