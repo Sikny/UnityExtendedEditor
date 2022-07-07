@@ -26,6 +26,7 @@ namespace EditorUtils.Editor {
         }
 
         private static void OnToolbarGUI() {
+            if (Application.isPlaying) return;
             GUIStyle style = EditorStyles.toolbarPopup;
             _sceneNames ??= GetScenesNames();
             var index = EditorGUILayout.Popup(_currentSceneIndex, _sceneNames, style, 
