@@ -10,6 +10,8 @@ namespace EditorUtils.Editor {
     [InitializeOnLoad]
     public class SceneSelector {
         private static int _currentSceneIndex;
+
+        private static string[] _sceneNames;
         
         static SceneSelector() {
             ToolbarExtender.RightToolbarGUI.Add(OnToolbarGUI);
@@ -19,12 +21,14 @@ namespace EditorUtils.Editor {
         }
 
         private static void OnSceneOpened(Scene oldScene, Scene newScene) {
+            _sceneNames = GetScenesNames();
             _currentSceneIndex = GetScenesPaths().FindIndex(p => newScene.path == p);
         }
 
         private static void OnToolbarGUI() {
             GUIStyle style = EditorStyles.toolbarPopup;
-            var index = EditorGUILayout.Popup(_currentSceneIndex, GetScenesNames(), style, 
+            _sceneNames ??= GetScenesNames();
+            var index = EditorGUILayout.Popup(_currentSceneIndex, _sceneNames, style, 
                 GUILayout.Width(150));
             
             if(_currentSceneIndex == index)
