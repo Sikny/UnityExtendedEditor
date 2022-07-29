@@ -8,7 +8,7 @@ using UnityToolbarExtender;
 
 namespace EditorUtils.Editor {
     [InitializeOnLoad]
-    public class SceneSelector {
+    internal class SceneSelector {
         private static int _currentSceneIndex;
 
         private static string[] _sceneNames;

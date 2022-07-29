@@ -3,39 +3,33 @@ using UnityEditor;
 using UnityEngine;
 
 namespace EditorUtils.Editor {
-    public class TransformUtils : MonoBehaviour
-    {
-        private struct TransformData
-        {
+    internal class TransformUtils : MonoBehaviour {
+        private struct TransformData {
             public Transform transform;
             public Vector3 position;
             public Quaternion rotation;
             public Matrix4x4 localToWorldMatrix;
         }
 
-        private static List<TransformData> SaveTransformData(Transform t)
-        {
+        private static List<TransformData> SaveTransformData(Transform t) {
             int childCount = t.childCount;
             List<TransformData> childsData = new List<TransformData>();
-            for (int i = 0; i < childCount; i++)
-            {
+            for (int i = 0; i < childCount; i++) {
                 Transform child = t.GetChild(i);
-                childsData.Add(new TransformData()
-                {
+                childsData.Add(new TransformData() {
                     transform = child, position = child.position, rotation = child.rotation,
                     localToWorldMatrix = child.localToWorldMatrix
                 });
                 Undo.RecordObject(child, "");
             }
+
             Undo.RecordObject(t, "");
 
             return childsData;
         }
 
-        private static void LoadChildsTransformData(List<TransformData> childsData, Transform parent)
-        {
-            foreach (var childData in childsData)
-            {
+        private static void LoadChildsTransformData(List<TransformData> childsData, Transform parent) {
+            foreach (var childData in childsData) {
                 Transform child = childData.transform;
                 child.position = childData.position;
                 child.rotation = childData.rotation;
@@ -58,13 +52,11 @@ namespace EditorUtils.Editor {
         }
 
         [MenuItem("CONTEXT/Transform/Reset position & update childs", false, 150)]
-        private static void ResetPosUpdateChilds()
-        {
+        private static void ResetPosUpdateChilds() {
             Transform[] targets = GetSelection();
 
             Undo.SetCurrentGroupName("Reset position & update childs");
-            foreach (var target in targets)
-            {
+            foreach (var target in targets) {
                 var childs = SaveTransformData(target);
 
                 target.localPosition = Vector3.zero;
@@ -78,13 +70,11 @@ namespace EditorUtils.Editor {
         }
 
         [MenuItem("CONTEXT/Transform/Reset rotation & update childs", false, 151)]
-        private static void ResetRotUpdateChilds()
-        {
+        private static void ResetRotUpdateChilds() {
             Transform[] targets = GetSelection();
 
             Undo.SetCurrentGroupName("Reset rotation & update childs");
-            foreach (var target in targets)
-            {
+            foreach (var target in targets) {
                 var childs = SaveTransformData(target);
 
                 target.localRotation = Quaternion.identity;
@@ -98,13 +88,11 @@ namespace EditorUtils.Editor {
         }
 
         [MenuItem("CONTEXT/Transform/Reset scale & update childs", false, 152)]
-        private static void ResetScaleUpdateChilds()
-        {
+        private static void ResetScaleUpdateChilds() {
             Transform[] targets = GetSelection();
-            
+
             Undo.SetCurrentGroupName("Reset scale & update childs");
-            foreach (var target in targets)
-            {
+            foreach (var target in targets) {
                 var childs = SaveTransformData(target);
 
                 target.localScale = Vector3.one;
@@ -118,13 +106,11 @@ namespace EditorUtils.Editor {
         }
 
         [MenuItem("CONTEXT/Transform/Reset transform & update childs", false, 153)]
-        private static void ResetTransformUpdateChilds()
-        {
+        private static void ResetTransformUpdateChilds() {
             Transform[] targets = GetSelection();
 
-            Undo.SetCurrentGroupName("Reset transform & update childs");    // create undo group
-            foreach (var target in targets)
-            {
+            Undo.SetCurrentGroupName("Reset transform & update childs"); // create undo group
+            foreach (var target in targets) {
                 var childs = SaveTransformData(target); // undo.record here
 
                 target.localPosition = Vector3.zero;
@@ -137,54 +123,48 @@ namespace EditorUtils.Editor {
 
             Undo.CollapseUndoOperations(Undo.GetCurrentGroup()); // register everything into group
         }
-        
-        [MenuItem("CONTEXT/Transform/Set pivot point to center of object", false, 164)] // priority 11 more than previous to have separator line
-        private static void CenterPivotPoint()
-        {
+
+        [MenuItem("CONTEXT/Transform/Set pivot point to center of object", false,
+            164)] // priority 11 more than previous to have separator line
+        private static void CenterPivotPoint() {
             Transform[] targets = GetSelection();
 
             Undo.SetCurrentGroupName("Set pivot point to center of object");
-            foreach (var target in targets)
-            {
+            foreach (var target in targets) {
                 Vector3 targetPos = target.position;
                 // compute center pos
 
                 if (target.childCount == 0) continue;
                 Renderer[] rends = target.GetComponentsInChildren<Renderer>(true);
                 Bounds bounds = rends[0].bounds;
-                foreach (Renderer rend in rends)
-                {
+                foreach (Renderer rend in rends) {
                     bounds.Encapsulate(rend.bounds);
                 }
 
                 Vector3 offset = bounds.center - targetPos;
-                
+
                 Undo.RecordObject(target, "");
                 target.position += offset;
-                
-                foreach (Transform child in target)
-                {
+
+                foreach (Transform child in target) {
                     if (child == target) continue;
-                
+
                     Undo.RecordObject(child, "");
                     child.position -= offset;
                 }
-                
+
                 EditorUtility.SetDirty(target);
             }
-            
+
             Undo.CollapseUndoOperations(Undo.GetCurrentGroup());
         }
 
-        private static Transform[] GetSelection()
-        {
-            if (ActiveEditorTracker.sharedTracker.isLocked)
-            {
+        private static Transform[] GetSelection() {
+            if (ActiveEditorTracker.sharedTracker.isLocked) {
                 var targets = ActiveEditorTracker.sharedTracker.activeEditors[0].targets;
                 List<Transform> result = new List<Transform>();
-                foreach (var obj in targets)
-                {
-                    result.Add(((GameObject) obj).transform);
+                foreach (var obj in targets) {
+                    result.Add(((GameObject)obj).transform);
                 }
 
                 return result.ToArray();

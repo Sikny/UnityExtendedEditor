@@ -6,7 +6,7 @@ using UnityEngine;
 namespace EditorUtils.Editor {
     [CustomEditor(typeof(Transform))]
     [CanEditMultipleObjects]
-    public class TransformExtendedInspector : UnityEditor.Editor{
+    internal class TransformExtendedInspector : UnityEditor.Editor{
         UnityEditor.Editor _defaultEditor;  // unity built-in editor
         private Transform _targetTransform;
         private static bool _worldSpaceFoldout;

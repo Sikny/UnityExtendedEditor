@@ -7,6 +7,12 @@ using UnityEngine;
 // ReSharper disable once CheckNamespace
 namespace UnityExtendedEditor.Reflection.Editor {
     public static class ReflectionUtils {
+        /// <summary>
+        /// Retrieves a list of MethodInfo which have the attribute T
+        /// </summary>
+        /// <param name="obj">The target on which to search for attribute T</param>
+        /// <typeparam name="T">Attribute type</typeparam>
+        /// <returns>List of MethodInfo</returns>
         public static List<MethodInfo> GetAllMethodsWithAttribute<T>(object obj) where T : Attribute {
             if (obj == null) {
                 Debug.LogError("Object is null");
@@ -32,6 +38,11 @@ namespace UnityExtendedEditor.Reflection.Editor {
             return result;
         }
 
+        /// <summary>
+        /// Returns all types and base types of an object
+        /// </summary>
+        /// <param name="obj">Object to check</param>
+        /// <returns>List of all object types</returns>
         private static List<Type> GetAllTypes(this object obj) {
             var result = new List<Type>();
 
