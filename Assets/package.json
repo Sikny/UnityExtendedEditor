@@ -1,6 +1,6 @@
 {
     "name": "com.sikny.unityextendededitor",
-    "version": "0.2.6",
+    "version": "0.2.7",
     "displayName": "Unity Extended Editor",
     "description": "Unity Editor utilities, windows, etc",
     "unity": "2020.3",
