@@ -13,4 +13,15 @@ namespace UnityExtendedEditor.Attributes.Editor {
             GUI.contentColor = guiColor;
         }
     }
+
+    [CustomPropertyDrawer(typeof(ColorLabelAttribute))]
+    public class ColorLabelDrawer : PropertyDrawer {
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label) {
+            var guiColor = GUI.contentColor;
+            GUI.contentColor = ((ColorAttribute)attribute).TextColor;
+            EditorGUI.LabelField(position, label);
+            GUI.contentColor = guiColor;
+            EditorGUI.PropertyField(position, property);
+        }
+    }
 }

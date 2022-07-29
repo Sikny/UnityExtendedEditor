@@ -17,6 +17,7 @@ namespace UnityExtendedEditor.Examples {
         [Range(0, 100)] public float progressBarValue;
 
         [Color(1, 0, 0)] public string stringColoredRed;
+        [ColorLabel(0, 1, 0)] public string labelColoredGreen;
 
         private void OnValidate() {
             progressBar = progressBarValue;

@@ -15,4 +15,8 @@ namespace UnityExtendedEditor.Attributes {
             _b = b;
         }
     }
+
+    public class ColorLabelAttribute : ColorAttribute {
+        public ColorLabelAttribute(float r, float g, float b) : base(r, g, b) {}
+    }
 }
