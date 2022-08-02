@@ -3,7 +3,7 @@ using System.Reflection;
 using UnityEditor;
 using UnityEngine;
 
-namespace EditorUtils.Editor {
+namespace UnityExtendedEditor.EditorUtils.Editor {
     [CustomEditor(typeof(Transform))]
     [CanEditMultipleObjects]
     internal class TransformExtendedInspector : UnityEditor.Editor{

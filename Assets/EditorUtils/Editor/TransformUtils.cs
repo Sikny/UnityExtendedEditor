@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace EditorUtils.Editor {
+namespace UnityExtendedEditor.EditorUtils.Editor {
     internal class TransformUtils : MonoBehaviour {
         private struct TransformData {
             public Transform transform;

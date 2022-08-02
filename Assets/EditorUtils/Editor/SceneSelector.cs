@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityToolbarExtender;
 
-namespace EditorUtils.Editor {
+namespace UnityExtendedEditor.EditorUtils.Editor {
     [InitializeOnLoad]
     internal class SceneSelector {
         private static int _currentSceneIndex;
