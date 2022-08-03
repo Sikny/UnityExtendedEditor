@@ -34,7 +34,7 @@ namespace UnityExtendedEditor.EditorUtils.Editor {
 
             var transform = ((GameObject)target).transform;
             var pos = transform.position;
-            var size = HandleUtility.GetHandleSize(pos) / 2f;
+            var size = HandleUtility.GetHandleSize(pos) / 3f;
 
             var axis = new[] {
                 new ColoredAxis { direction = transform.up, color = Handles.yAxisColor },
@@ -43,18 +43,18 @@ namespace UnityExtendedEditor.EditorUtils.Editor {
             };
             axis = OrderDirectionByAngleWithSceneView(axis).ToArray();
             foreach (var v in axis) {
-                DrawAxisButton(pos, v.direction, size, v.color);
+                DrawAxisButton(pos, size, v);
             }
         }
 
-        private void DrawAxisButton(Vector3 pos, Vector3 dir, float size, Color col) {
+        private void DrawAxisButton(Vector3 pos, float size, ColoredAxis axis) {
             var sceneCamForward = SceneView.currentDrawingSceneView.camera.transform.forward;
-            var angle = Vector3.Angle(sceneCamForward, -dir);
+            var angle = Vector3.Angle(sceneCamForward, -axis.direction);
             if (angle < 15) return;
             
-            Handles.color = col;
-            if (Handles.Button(pos + dir * size, Quaternion.LookRotation(-dir), size, size, Handles.ConeHandleCap)) {
-                SetSceneViewLookAt(-dir);
+            Handles.color = axis.color;
+            if (Handles.Button(pos + axis.direction * size, Quaternion.LookRotation(-axis.direction), size, size, Handles.ConeHandleCap)) {
+                SetSceneViewLookAt(-axis.direction);
             }
         }
 
